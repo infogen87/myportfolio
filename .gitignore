@@ -1,0 +1,55 @@
+# Python cache and artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# IDE/editor folders
+.vscode/
+.idea/
+*.swp
+
+# Env and secret files
+.env
+.env.*
+
+# Logs, temp files
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Database files (if using SQLite)
+*.db
+*.sqlite3
+
+# Alembic migrations cache
+alembic/versions/__pycache__/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+
+# MyPy / Pyright
+.mypy_cache/
+.pyright/
+
+# Docker
+*.pid
+*.pid.lock
+docker-compose.override.yml
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
