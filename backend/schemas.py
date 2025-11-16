@@ -1,74 +1,69 @@
-from typing import Literal, Optional
-from pydantic import BaseModel, ConfigDict, EmailStr
-from uuid import UUID
+# schemas.py
+from pydantic import BaseModel, Field, HttpUrl
 from datetime import datetime
+from uuid import UUID
+from typing import Optional, List
 
+# Tool Schemas
+class ToolBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
 
+class ToolCreate(ToolBase):
+    pass
 
-class ProjectCreate(BaseModel):
-    name: str
-    description: str
-    github_link: str
-    live_link: str
-
-
-
-class ProjectResponse(BaseModel):
+class ToolResponse(ToolBase):
     id: UUID
-    owner_id: UUID
-    name: str
-    description: str
-    github_link: str
-    live_link: str
-    created_at: datetime
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-
-class ProjectUpdate(BaseModel):
-    name: Optional[str] = None  
-    description: Optional[str] = None  
-    github_link: Optional[str] = None  
-    live_link: Optional[str] = None  
-
-
-class PaginatedProjectResponse(BaseModel):
-    total: int
-    limit: int
-    offset: int
-    results: list[ProjectResponse]        
-
-
-
-
-
-
-#----------------------------users
-
-
-class UserBase(BaseModel):
-    username: str
-    password: str
-
-    
-class UserCreate(UserBase):
-    pass 
-
-
-class UserResponse(BaseModel):
-    id: UUID
-    username: str
+    project_id: UUID
     created_at: datetime
     updated_at: datetime
     
     class Config:
-        # orm_mode = True
         from_attributes = True
-        
 
 
-class UserUpdate(BaseModel):
-    username: Optional[str] = None
-    password: Optional[str] = None
+# Project Schemas
+class ProjectBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=255)
+    description: str = Field(..., min_length=1)
+    github_link: Optional[str] = Field(None, max_length=500)
+    live_link: Optional[str] = Field(None, max_length=500)
 
+class ProjectCreate(ProjectBase):
+    tools: List[str] = Field(default_factory=list)
+
+class ProjectUpdate(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=255)
+    description: Optional[str] = Field(None, min_length=1)
+    github_link: Optional[str] = Field(None, max_length=500)
+    live_link: Optional[str] = Field(None, max_length=500)
+    tools: Optional[List[str]] = None
+
+class ProjectResponse(ProjectBase):
+    id: UUID
+    user_id: UUID
+    created_at: datetime
+    updated_at: datetime
+    tools: List[ToolResponse] = []
+    
+    class Config:
+        from_attributes = True
+
+
+# Skill Schemas
+class SkillBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
+
+class SkillCreate(SkillBase):
+    pass
+
+class SkillUpdate(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=100)
+
+class SkillResponse(SkillBase):
+    id: UUID
+    user_id: UUID
+    created_at: datetime
+    updated_at: datetime
+    
+    class Config:
+        from_attributes = True
