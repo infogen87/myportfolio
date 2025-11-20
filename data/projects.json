@@ -1,0 +1,40 @@
+[
+  {
+    "id": "1",
+    "name": "E-Commerce API",
+    "description": "A RESTful API for an e-commerce platform built with FastAPI and PostgreSQL. Features include user authentication, product management, shopping cart, and order processing.",
+    "github_link": "https://github.com/yourusername/ecommerce-api",
+    "live_link": "https://ecommerce-api.example.com",
+    "tools": [
+      { "name": "Python" },
+      { "name": "FastAPI" },
+      { "name": "PostgreSQL" },
+      { "name": "Docker" }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Task Management System",
+    "description": "A task management application with real-time updates. Users can create, assign, and track tasks with team collaboration features.",
+    "github_link": "https://github.com/yourusername/task-manager",
+    "live_link": "",
+    "tools": [
+      { "name": "Python" },
+      { "name": "FastAPI" },
+      { "name": "MongoDB" },
+      { "name": "WebSockets" }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Portfolio Website",
+    "description": "A personal portfolio website showcasing my projects and skills. Built with clean HTML, CSS, and JavaScript with dynamic content loading.",
+    "github_link": "https://github.com/infogen87/myportfolio",
+    "live_link": "https://yourportfolio.vercel.app",
+    "tools": [
+      { "name": "HTML" },
+      { "name": "CSS" },
+      { "name": "JavaScript" }
+    ]
+  }
+]

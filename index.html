@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Portfolio</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/home.css" />
 </head>
 <body>
 
@@ -56,36 +56,17 @@
   <!-- Skills Section -->
   <section class="reveal">
     <h2>My Skills</h2>
-    <ul class="styled-list">
-      <li>Python</li>
-      <li>FastAPI</li>
-      <li>REST APIs</li>
-      <li>PostgreSQL</li>
-      <li>Docker</li>
-      <li>MongoDB</li>
-      <li>Flutter</li>
-      <li>Git & GitHub</li>
+    <ul class="styled-list" id="skills-list">
+      <li style="background: transparent; color: #00ffff;">Loading skills...</li>
     </ul>
   </section>
 
   <!-- Project Highlights -->
   <section id="project-highlights" class="reveal">
     <h2>Featured Project(s)</h2>
-    <div class="projects">
-      <div class="project">
-        <h3>Project One</h3>
-        <p>A brief description about this project and what it does.</p>
-        <a href="projects.html">See More</a>
-      </div>
-      <div class="project">
-        <h3>Project Two</h3>
-        <p>A brief description about this project and what it does.</p>
-        <a href="projects.html">See More</a>
-      </div>
-      <div class="project">
-        <h3>Project Three</h3>
-        <p>A brief description about this project and what it does.</p>
-        <a href="projects.html">See More</a>
+    <div class="projects" id="featured-projects">
+      <div class="project" style="background: transparent; text-align: center;">
+        <p style="color: #00ffff;">Loading projects...</p>
       </div>
     </div>
   </section>
@@ -113,6 +94,56 @@
     </div>
   </footer>
 
-  <script src="js/script.js"></script>
+  <!-- <script src="js/script.js"></script> -->
+  <script>
+    // Fetch and display skills from JSON
+    async function loadSkills() {
+      const skillsList = document.getElementById('skills-list');
+      
+      try {
+        const response = await fetch('data/skills.json');
+        const skills = await response.json();
+        
+        skillsList.innerHTML = skills.map(skill => `<li>${skill.name}</li>`).join('');
+      } catch (error) {
+        console.error('Error loading skills:', error);
+        skillsList.innerHTML = '<li style="background: transparent; color: #ff4444;">Error loading skills</li>';
+      }
+    }
+
+    // Fetch and display featured projects (first 3)
+    async function loadFeaturedProjects() {
+      const projectsContainer = document.getElementById('featured-projects');
+      
+      try {
+        const response = await fetch('data/projects.json');
+        const projects = await response.json();
+        
+        // Get only first 3 projects for featured section
+        const featuredProjects = projects.slice(0, 3);
+        
+        projectsContainer.innerHTML = featuredProjects.map(project => `
+          <div class="project">
+            <h3>${project.name}</h3>
+            <p>${project.description.substring(0, 100)}${project.description.length > 100 ? '...' : ''}</p>
+            <a href="projects.html">See More</a>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        projectsContainer.innerHTML = `
+          <div class="project" style="background: transparent; text-align: center;">
+            <p style="color: #ff4444;">Error loading projects</p>
+          </div>
+        `;
+      }
+    }
+
+    // Load data when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSkills();
+      loadFeaturedProjects();
+    });
+  </script>
 </body>
 </html>
